@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { addContact, getContacts } from 'redux/contactsSlice';
 import s from './Form.module.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 export default function Form({ onFormSubmit }) {
     const dispatch = useDispatch();
@@ -11,18 +11,15 @@ export default function Form({ onFormSubmit }) {
     const [number, setNumber] = useState('');
     const contacts = useSelector(getContacts);
 
+    const inputNameId = nanoid();
+    const inputNumberId = nanoid();
 
+    // const handleSubmit = e => {
+    //     e.preventDefault();
 
-    const reset = () => {
-        setName('');
-        setNumber('');
-    };
-    const handleSubmit = e => {
-        e.preventDefault();
-
-        onFormSubmit({ name, number });
-        reset();
-    };
+    //     onFormSubmit({ name, number });
+    //     reset();
+    // };
     const handleChangeName = e => {
         setName(e.target.value);
     };
@@ -30,16 +27,26 @@ export default function Form({ onFormSubmit }) {
     const handleChangeNumber = e => {
         setNumber(e.target.value);
 
+
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
         contacts.some(contact => contact.name === name)
             ? alert(`${name} is already in contacts`)
             : dispatch(addContact({ name, number }));
 
         reset();
+
+    };
+    const reset = () => {
+        setName('');
+        setNumber('');
     };
     return (
         <div>
             <form className={s.form} onSubmit={handleSubmit}>
-                <p className={s.title}>Name</p>
+                <p className={s.title} htmlFor={inputNameId}>Name</p>
                 <input
                     className={s.input}
                     type="text"
@@ -50,7 +57,7 @@ export default function Form({ onFormSubmit }) {
                     value={name}
                     onChange={handleChangeName}
                 />
-                <p className={s.title}>Number</p>
+                <p className={s.title} htmlFor={inputNumberId}>Number</p>
                 <input
                     className={s.input}
                     type="tel"
@@ -66,6 +73,6 @@ export default function Form({ onFormSubmit }) {
         </div>
     );
 }
-// Form.propTypes = {
-//     onFormSubmit: PropTypes.func.isRequired,
-// };
+Form.propTypes = {
+    onFormSubmit: PropTypes.func.isRequired,
+};
