@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { addContact, getContacts } from 'redux/contactsSlice';
 import s from './Form.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-export default function Form({ onFormSubmit }) {
+export default function Form() {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
@@ -14,12 +14,7 @@ export default function Form({ onFormSubmit }) {
     const inputNameId = nanoid();
     const inputNumberId = nanoid();
 
-    // const handleSubmit = e => {
-    //     e.preventDefault();
 
-    //     onFormSubmit({ name, number });
-    //     reset();
-    // };
     const handleChangeName = e => {
         setName(e.target.value);
     };
@@ -73,6 +68,6 @@ export default function Form({ onFormSubmit }) {
         </div>
     );
 }
-Form.propTypes = {
-    onFormSubmit: PropTypes.func.isRequired,
-};
+// Form.propTypes = {
+//     onFormSubmit: PropTypes.func.isRequired,
+// };
